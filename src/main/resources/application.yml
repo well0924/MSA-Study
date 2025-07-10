@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: MSALearningProject
+
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: 'jdbc:h2:mem:msa'    # In-Memory Mode
+    #url: 'jdbc:h2:~/test'    # Embedded Mode
+    username: msa
+    password: msa
