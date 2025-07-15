@@ -23,16 +23,29 @@ public class ExampleController {
         return ResponseEntity.ok(exampleService.sampleSelect(id));
     }
 
-    @Operation(summary = "Example API", description = "Example API to Save Sample Data")
-    @PostMapping("/sample")
-    public ResponseEntity<String> sampleSave() {
-        log.info("sampleTest API Start");
+    @Operation(summary = "Example API", description = "Example API to update Sample example")
+    @PatchMapping("/sample")
+    public ResponseEntity<String> sampleUpdate(@RequestParam Long id ,
+                                             @RequestParam String content){
+        log.info("sampleUpdate API Start");
         return ResponseEntity.ok(
-                exampleService.sampleSave(
+                exampleService.sampleUpdate(
                         SampleDTO.builder()
-                                 .id(1L)
-                                 .content("This is a save test")
+                                 .id(id)
+                                 .content(content)
                                  .build()
+                ));
+    }
+
+    @Operation(summary = "Example API", description = "Example API to Insert Sample example")
+    @PostMapping("/sample")
+    public ResponseEntity<String> sampleInsert(@RequestParam String content){
+        log.info("sampleInsert API Start");
+        return ResponseEntity.ok(
+                exampleService.sampleInsert(
+                        SampleDTO.builder()
+                                .content(content)
+                                .build()
                 ));
     }
 

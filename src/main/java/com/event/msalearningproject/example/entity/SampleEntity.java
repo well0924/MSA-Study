@@ -2,12 +2,10 @@ package com.event.msalearningproject.example.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@ToString
 @Getter
 @Table(name = "sample_test")
 @Entity

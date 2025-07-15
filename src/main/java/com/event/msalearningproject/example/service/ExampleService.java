@@ -20,14 +20,22 @@ public class ExampleService {
     }
 
     @Transactional
-    public String sampleSave(SampleDTO sampleDto) {
-
-        log.info("sampleSave data : {}", sampleDto.toString());
-
+    public String sampleUpdate(SampleDTO sampleDto) {
+        log.info("sampleUpdate data : {}", sampleDto.toString());
         sampleRepository.save(SampleEntity.builder()
+                        .id(sampleDto.getId())
                         .content(sampleDto.getContent())
                         .build());
-        return "hello world";
+        return "update success";
+    }
+
+    @Transactional
+    public String sampleInsert(SampleDTO sampleDto) {
+        log.info("sampleInsert data : {}", sampleDto.toString());
+        sampleRepository.save(SampleEntity.builder()
+                .content(sampleDto.getContent())
+                .build());
+        return "insert success";
     }
 
     @Transactional
