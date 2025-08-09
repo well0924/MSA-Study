@@ -1,65 +1,79 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.3'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
 
-group = 'com.event'
-version = '0.0.1-SNAPSHOT'
+springBoot {
+    mainClass = 'com.event.msalearningproject.MsaLearningProjectApplication'
+}
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+// 모든 프로젝트에 적용
+allprojects {
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+subprojects {
+    apply {
+        plugin 'java'
+        plugin 'org.springframework.boot'
+        plugin 'io.spring.dependency-management'
+    }
+    tasks.bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+
+    dependencies {
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        // H2 DB
+        runtimeOnly 'com.h2database:h2'
+
+
+        // DB Access
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation ("org.springframework.boot:spring-boot-starter-jdbc")
+        implementation ("org.hibernate.validator:hibernate-validator:6.2.0.Final")
+        implementation ('org.glassfish:jakarta.el:3.0.4')
+        //implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+
+        // Event Middleware Rabbit MQ & Kafka
+        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+        implementation 'org.springframework.kafka:spring-kafka'
+
+        // Server API Call library
+        //implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+        // Swagger
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+        // JACKSON CONVERT Library
+        implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.5'
+
+        // Lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 }
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    // H2 DB
-    runtimeOnly 'com.h2database:h2'
-
-
-    // DB Access
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation ("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation ("org.hibernate.validator:hibernate-validator:6.2.0.Final")
-    implementation ('org.glassfish:jakarta.el:3.0.4')
-    //implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
-
-    // Event Middleware Rabbit MQ & Kafka
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.kafka:spring-kafka'
-
-    // Server API Call library
-    //implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    // Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
-    // JACKSON CONVERT Library
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.5'
-
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }

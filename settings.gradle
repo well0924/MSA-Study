@@ -1,1 +1,6 @@
 rootProject.name = 'MSALearningProject'
+
+include('bootstrap')
+include('member')
+include('message')
+include('common')
